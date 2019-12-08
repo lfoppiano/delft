@@ -4,13 +4,13 @@ import argparse
 import json
 import time
 
-import keras.backend as K
-
-from delft.sequenceLabelling.preprocess import prepare_preprocessor
 from sklearn.model_selection import train_test_split
+
 from delft.sequenceLabelling import Sequence
 from delft.sequenceLabelling.models import *
 from delft.sequenceLabelling.reader import load_data_and_labels_crf_file
+
+import keras.backend as K
 
 MODEL_LIST = ['affiliation-address', 'citation', 'date', 'header', 'name-citation', 'name-header', 'software']
 
@@ -150,16 +150,13 @@ def eval_(model, use_ELMo=False, input_path=None, output_path=None):
     # load the model
     model = Sequence(model_name)
     model.load()
-    # model.p.fit(x_all, y_all)
-    # model.model_config.char_vocab_size = len(model.p.vocab_char)
-    # model.model_config.case_vocab_size = len(model.p.vocab_case)
 
     # evaluation
     print("\nEvaluation:")
     model.eval(x_all, y_all)
 
     runtime = round(time.time() - start_time, 3)
-    print("evaluation runtime: %s seconds " % (runtime))
+    print("Evaluation runtime: %s seconds " % (runtime))
 
 
 # annotate a list of texts, this is relevant only of models taking only text as input
